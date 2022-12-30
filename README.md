@@ -206,7 +206,7 @@ from any directory, with the relevant virtual environment activated.
 
 Citation
 -----------------
-The main paper to cite for this repository is our 2022 [paper](https://doi.org/10.3390/s23010419):
+The main paper to cite for this repository is our 2023 [paper](https://doi.org/10.3390/s23010419):
 ```bibtex
 @Article{RUMpy,
     AUTHOR = {Aquilina, Matthew and Ciantar, Keith George and Galea, Christian and Camilleri, Kenneth P. and Farrugia, Reuben A. and Abela, John},
