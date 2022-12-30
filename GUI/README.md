@@ -22,6 +22,8 @@ To build the application as a binary for different platforms, the [electron-pack
 
 To run the application packager, open a terminal in the ```./GUI``` folder and run the command ```npm run build```. This should take a few minutes and will result in three folders in the form of ```./DeepFiR_GUI-*OS name*-x64```. The respective executables can be found in each folder and the application can be run by either clicking on the file, or in the case of Linux running the command ```./DeepFIR_GUI-linux-x64/DeepFIR_GUI```.
 
+For convenience, a packaged pre-release version of the GUI application has also been made available under the tag [v0.1.0-alpha](https://github.com/um-dsrg/RUMpy/releases/tag/v0.1.0-alpha).
+
 Backend Super-Resolution System - Flask
 --------------------------
 
@@ -38,7 +40,7 @@ At the moment there is no straightforward way to package this script. After nume
 Execution
 --------------------------
 
-To operate the application with both the Electron frontend and the Super-Resolution API backend, the following steps need to be carried out.
+To operate the application with both the Electron frontend and the Super-Resolution API backend, the following steps need to be carried out. If you are using the packaged application from the [pre-release](https://github.com/um-dsrg/RUMpy/releases/tag/v0.1.0-alpha), you can skip directly to step 3.
 
 1. Open the ```./GUI``` folder, and check for the file named ```models.csv```. If this file is not found, create it yourself. The file should contain a table-like list, with information on the models that are downloaded on your system. The file ```models_template.csv``` is given as an example of how ```models.csv``` should be populated, as shown below.
     ```
@@ -47,9 +49,10 @@ To operate the application with both the Electron frontend and the Super-Resolut
     model_2,"Model Two","path/to/model/folder",best,"Type 2"
     ```
 2. Open a terminal in the ```./GUI``` folder and run the ```npm start``` command. *Optionally, after packaging with the ```npm run build``` command, click on the resulting executable in one of the folders with the name ```DeepFIR_GUI-*OS name*-x64```.*
-3. Open another terminal in the same folder and activate the DeepFIR virtual environment (typically using a command like ```conda activate *ENV_NAME*```, where ```*ENV_NAME*``` is the name of the environment).
-4. Run the command ```python deep_fir_server.py``` or ```python3 deep_fir_server.py``` and wait until the server has finished setting up.
-5. Go through the Electron application and check that there are no issues with the pages. To carry out super-resolution on an image or a video frame, make sure to first read through the instructions, to get an overview of the necessary steps.
+3. If you are using the packaged application from the [pre-release](https://github.com/um-dsrg/RUMpy/releases/tag/v0.1.0-alpha), make sure to check the folder ```./resources/app``` for WIndows or Linux, or the folder ```./Contents/Resources/app``` for Mac, so that you can update the ```models.csv``` file. Take a look a step 1 to see what information is required for the ```models.csv``` and edit it accordingly. After this you should be able to launch the application and carry-on with the following steps.
+4. Open another terminal in the same folder and activate the DeepFIR virtual environment (typically using a command like ```conda activate *ENV_NAME*```, where ```*ENV_NAME*``` is the name of the environment).
+5. Run the command ```python deep_fir_server.py``` or ```python3 deep_fir_server.py``` and wait until the server has finished setting up.
+6. Go through the Electron application and check that there are no issues with the pages. To carry out super-resolution on an image or a video frame, make sure to first read through the instructions, to get an overview of the necessary steps.
 
 Instruction Video
 --------------------------
