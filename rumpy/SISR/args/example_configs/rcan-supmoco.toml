@@ -1,0 +1,58 @@
+experiment = "rcan_supmoco"  # experiment name
+experiment_save_loc = '../../../Results/SISR'  # experiment save location
+
+[data]
+batch_size = 8  # data batch size
+dataloader_threads = 4  # parallel threads to use to speed up data processing
+
+[data.training_sets]
+[data.training_sets.data_1]
+name = 'div2k'
+lr = '../../../Data/div2k/lr_iso_blur_only'
+hr = '../../../Data/div2k/HR'
+degradation_metadata = 'on_site'
+crop = 64
+random_augment = true
+ignore_degradation_location = true
+[data.training_sets.data_2]
+name = 'flickr2k'
+lr = '../../../Data/flickr2k/lr_iso_blur_only'
+hr = '../../../Data/flickr2k/HR'
+degradation_metadata = 'on_site'
+crop = 64
+random_augment = true
+ignore_degradation_location = true
+[data.eval_sets]
+[data.eval_sets.data_1]
+name = 'div2k'
+lr = '../../../Data/div2k/lr_iso_blur_only'
+hr = '../../../Data/div2k/HR'
+degradation_metadata = 'on_site'
+ignore_degradation_location = true
+
+[model]
+name = 'ContrastiveBlindQRCAN'  # model architecture name
+[model.internal_params]
+scale = 4
+lr = 0.0001
+pre_trained_encoder_weights = "path_to_weights"
+scheduler = "cosine_annealing_warm_restarts"
+selective_meta_blocks = [ true, false, false, false, false, false, false, false, false, false,]
+include_q_layer = true
+style = "standard"
+num_q_layers_inner_residual = 1
+
+[model.internal_params.scheduler_params]
+t_mult = 1
+restart_period = 125000
+lr_min = 1e-7
+scheduler = 'cosine_annealing_warm_restarts'
+
+[training]
+gpu = 'single' # one of multi, single, off
+sp_gpu = 0 # inital gpu to use
+seed = 8  # random seed
+epoch_cutoff = 1000  # epochs requested
+metrics = ['PSNR', 'SSIM']  # metrics to calculate on validation set
+id_source = 'standard'  # location of ids to use for face recognition metrics
+logging = 'visual' # one of visual or text

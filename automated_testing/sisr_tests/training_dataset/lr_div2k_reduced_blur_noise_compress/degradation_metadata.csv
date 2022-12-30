@@ -1,0 +1,3 @@
+image,0-realesrganblur-sigma_x,0-realesrganblur-sigma_y,0-realesrganblur-rotation,0-realesrganblur-kernel_type,0-realesrganblur-beta_p,0-realesrganblur-beta_g,0-realesrganblur-omega_c,0-realesrganblur-kernel_size,1-downsample-scale,2-realesrgannoise-gaussian_noise_scale,2-realesrgannoise-gray_noise,2-realesrgannoise-poisson_noise_scale,3-randomcompress-jm_qpi,3-randomcompress-jpeg_quality
+0001.png,0.8734294027918164,0.968540662820932,2.319717710563025,1,0,0,0,21,0.3333333333333333,0.0,0.0,0.7109343678491398,0.0,0.24615384615384617
+0002.png,0.23272832797729073,0.011398804277429897,-0.4368772992954577,1,0,0,0,21,0.3333333333333333,0.10774115546322055,1.0,0.0,0.2,0.0

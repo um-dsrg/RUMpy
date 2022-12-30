@@ -6,9 +6,12 @@
 
 # Large Packages
 Code/external_packages/*
+external_packages/*
 
 # Local config files
 Code/rumpy/SISR/args/local/*
+rumpy/SISR/args/local/*
+Code/DeepFIR/SISR/args/local/*
 
 # Python package system
 *.egg-info/
@@ -29,8 +32,10 @@ node_modules
 .ipynb_checkpoints
 
 Code/rumpy/MISR/rough_ignore/
-
 Code/rumpy/MISR/results/web_debug/
+
+rumpy/MISR/rough_ignore/
+rumpy/MISR/results/web_debug/
 
 .pytest_cache
 
@@ -40,11 +45,8 @@ Code/rumpy/MISR/results/web_debug/
 # JM folder for compression
 JM/*
 
-# Local config files
-Code/DeepFIR/SISR/args/local/*
-
 # Spyder Files
-Code/.spyproject/
+.spyproject
 
 # Old location of VSR folder
 Code/VSR/
@@ -54,3 +56,4 @@ Code/VSR/
 
 # Temporarily ignore DECA files
 Code/rumpy/sr_tools/3d_faces/
+rumpy/sr_tools/3d_faces/

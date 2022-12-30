@@ -1,0 +1,230 @@
+html {
+    /* display: table; */
+    margin: auto;
+}
+
+body {
+    /* display: table-cell; */
+    vertical-align: middle;
+    margin: 0;
+}
+
+h1 {
+    font-size: 28pt;
+    margin-left: 17%;
+}
+
+h2 {
+    font-size: 18pt;
+}
+
+h3 {
+    font-size: 14pt;
+}
+
+.descList {
+    font-size: 13pt;
+    font-weight: normal;
+    font-family: 'Arial', sans-serif;
+    padding-top: 5px;
+}
+
+.descItem {
+    font-size: 11pt;
+    font-weight: normal;
+    font-family: 'Arial', sans-serif;
+}
+
+label {
+    font-size: 13pt;
+    font-weight: normal;
+    font-family: 'Arial', sans-serif;
+    display: inline-block;
+    text-align: left;
+    padding-top: 10px;
+    height: 30px;
+    width: 380px;
+}
+
+.inputBox {
+    font-size: 13pt;
+    font-weight: normal;
+    font-family: 'Arial', sans-serif;
+    height: 30px;
+    width: 250px;
+}
+
+.testButton {
+    font-size: 13pt;
+    font-weight: normal;
+    font-family: 'Arial', sans-serif;
+    height: 30px;
+    width: 250px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.testButton:hover {
+    background: rgb(215, 214, 233);
+}
+
+.textDiv {
+    margin-left: 17%;
+    padding-right: 5%;
+}
+
+.imageDiv {
+    margin-left: 11%;
+    padding-right: 5%;
+}
+
+.mapDiv {
+    position: absolute;
+    top: 5%;
+    right: 7.5%;
+}
+
+.centre {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading {
+    color: #15156e;
+    padding-top: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+ul.sidenav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 15%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+ul.sidenav li a {
+    display: block;
+    color: #000;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+ul.sidenav li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul.sidenav li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+@media screen and (max-width: 900px) {
+    ul.sidenav {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    ul.sidenav li a {
+        float: left;
+        padding: 15px;
+    }
+
+    div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+    ul.sidenav li a {
+        text-align: center;
+        float: none;
+    }
+}
+
+#inputDiv {
+    font-family: 'Arial', sans-serif;
+}
+
+#contentLoad {
+    max-width: 40vw;
+    margin: 10px;
+    margin-left: 17%;
+}
+
+#metadataLoad {
+    visibility: hidden;
+    max-width: 40vw;
+    margin: 10px;
+    margin-left: 17%;
+}
+
+#videoplayer {
+    visibility: hidden;
+    max-width: 40vw;
+    margin: 10px;
+    text-align: center;
+    margin-left: 17%;
+}
+
+#chosenFrame {
+    visibility: hidden;
+    max-width: 40vw;
+    margin: 10px;
+    text-align: center;
+    margin-left: 17%;
+}
+
+#croppedFrame {
+    visibility: hidden;
+    max-width: 40vw;
+    margin: 10px;
+    text-align: center;
+    margin-left: 17%;
+}
+
+#superResolvedFrame {
+    visibility: hidden;
+    max-width: 40vw;
+    margin: 10px;
+    text-align: center;
+    margin-left: 17%;
+}
+
+#comparisonFrame {
+    visibility: hidden;
+    max-width: 40vw;
+    margin: 10px;
+    text-align: center;
+    margin-left: 17%;
+}
+
+canvas {
+    visibility: hidden;
+    width: 40vw;
+    max-width: 100%;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
+    image-rendering: high-quality;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+.adjustableImages {
+    width: auto;
+    padding: 10px;
+}
+
+ol {
+    padding-left: 4%;
+}
+
+p + ol {
+    margin-top: -10px;
+}

@@ -1,0 +1,13 @@
+metrics = ['PSNR', 'SSIM']  # metrics to calculate on validation set
+model_and_epoch = [['rcan_cosine_v2', 'best'], ['q-rcan_cosine', 'best']]
+results_name = 'simple_test'
+gpu = true
+save_im = true
+scale = 4
+model_loc = './Results/SISR/div_flickr/trained_models/standard_best/'
+hr_dir = './Data/example_data/Set5/hr'
+lr_dir = './Data/example_data/Set5/lr_random_blur'
+batch_size = 1
+out_loc = '/Users/matt/Desktop'
+full_directory = true
+recursive = true

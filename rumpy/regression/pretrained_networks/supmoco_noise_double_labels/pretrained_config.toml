@@ -1,0 +1,8 @@
+[model]
+name = "supmoco"
+[model.internal_params]
+lr = 0.001
+crop_count = 4
+model_name = "default"
+labelling_strategy = "half_precision"
+data_type = "single-frame"

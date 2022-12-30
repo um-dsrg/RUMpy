@@ -1,0 +1,10 @@
+pipeline = [['realesrgannoise', 'n-config'], ['downsample', 'd-config']]
+
+[deg_configs]
+[deg_configs.d-config]
+scale = 4
+[deg_configs.n-config]
+gaussian_poisson_ratio = 0.5
+gaussian_noise_sigma_range = [1, 30]
+poisson_noise_scale_range = [0.05, 3.0]
+

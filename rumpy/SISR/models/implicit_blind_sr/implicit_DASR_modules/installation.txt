@@ -1,0 +1,5 @@
+To work with DASR, please run the following commands (from this directory) to install the necessary extra libraries:
+
+git clone https://github.com/fbcotter/pytorch_wavelets.git
+cd pytorch_wavelets
+pip install .

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src "self"; script-src "self"">-->
+        <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src "self"; script-src "self"">-->
+        <!-- Find out how to setup the above....-->
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/brands.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/regular.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/solid.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css">
+        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../node_modules/cropperjs/dist/cropper.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Deep-FIR GUI</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="sidenav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions</a></li>
+                    <li><a href="super.html">Super-Resolution</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div>
+            <h1 class="heading">Settings</h1>
+        </div>
+        <div class="textDiv">
+            <label for="videoFps">Video FPS (Frames Per Second):</label>
+            <select id="videoFps" class="inputBox">
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="29.97">29.97</option>
+                <option value="30" selected="selected">30</option>
+                <option value="50">50</option>
+                <option value="59.94">59.94</option>
+                <option value="60">60</option>
+            </select></br>
+
+            <label for="url">DeepFIR API URL:</label>
+            <input type="url" name="url" id="url" class="inputBox" value="http://127.0.0.1:5000/" pattern="http*://.*" size="25" required></br>
+
+            <label for="testConnection">Connection status: <span id="connectionStatus" style="color: #FF9900">Unknown<span></label>
+            <button id="testConnection" type="button" class="testButton">Test API Connection</button></br>
+
+            <label for="metadata">Use metadata?</label>
+            <select id="metadata" class="inputBox" disabled>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select></br>
+
+            <label for="models">Super-Resolution Model:</label>
+            <select id="models" class="inputBox">
+            </select></br>
+
+            <label for="processor">Processor:</label>
+            <select id="processor" class="inputBox">
+                <option value="gpu">GPU</option>
+                <option value="cpu">CPU</option>
+            </select></br>
+
+            <label for="loadModel">Model status: <span id="modelStatus" style="color: #FF9900">Unknown<span></span></label>
+            <button id="loadModel" type="button" class="testButton">Load Model</button></br>
+        </div>
+        <script>window.$ = window.jQuery = require("../node_modules/jquery/dist/jquery.min.js");</script>
+        <script src="../js/settings.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/csv/dist/iife/index.js"></script>
+        <script src="../node_modules/csv/dist/iife/sync.js"></script>
+        <script src='../node_modules/lodash/lodash.js'></script>
+    </body>
+</html>
+

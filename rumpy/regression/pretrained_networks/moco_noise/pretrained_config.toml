@@ -1,0 +1,6 @@
+[model]
+name = "mococontrastive"
+[model.internal_params]
+lr = 0.0001
+crop_count = 2
+model_name = "default"

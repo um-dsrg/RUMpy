@@ -1,0 +1,30 @@
+{
+  "name": "deep_fir_gui",
+  "productName": "DeepFIR_GUI",
+  "version": "1.0.0",
+  "description": "Deep-FIR GUI",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf DeepFIR_GUI-* && electron-packager . --platform=darwin,win32,linux --arch=x64 --icon=app",
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@popperjs/core": "^2.10.2",
+    "bootstrap": "^5.1.3",
+    "cropperjs": "^1.5.12",
+    "csv": "^6.2.5",
+    "electron-packager": "^17.1.1",
+    "jquery": "^3.6.3",
+    "jspdf": "^2.4.0",
+    "lodash": "^4.17.21",
+    "rimraf": "^3.0.2",
+    "tiff.js": "^1.0.0"
+  }
+}

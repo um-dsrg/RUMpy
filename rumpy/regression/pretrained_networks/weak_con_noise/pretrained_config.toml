@@ -1,0 +1,7 @@
+[model]
+name = 'weakcon'  # model architecture name
+[model.internal_params] # parameters specific for each model
+lr = 1e-3 # learning rate
+crop_count = 2
+model_name='default'
+data_type = 'all'

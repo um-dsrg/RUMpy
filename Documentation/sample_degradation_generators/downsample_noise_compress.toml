@@ -1,0 +1,26 @@
+seed = 8
+scale = 4.0
+recursive = false
+output_extension = ".png"
+multiples = 5
+override_cli = true
+source_dir = "HR_dir"
+output_dir = "LR_dir"
+pipeline = [ [ "downsample", "d-config",], [ "realesrgannoise", "n-config",], [ "randomcompress", "c-config",],]
+
+[deg_configs.d-config]
+scale = 4
+
+[deg_configs.n-config]
+gaussian_poisson_ratio = 0.5
+gaussian_noise_sigma_range = [ 1.0, 30.0,]
+poisson_noise_scale_range = [ 0.05, 3.0,]
+gray_noise_probability = 0.4
+device = "cuda"
+
+[deg_configs.c-config.jpeg_params]
+compression_range = [ 30, 95,]
+random_compression = true
+
+[deg_configs.c-config.jm_params]
+random_compression = true

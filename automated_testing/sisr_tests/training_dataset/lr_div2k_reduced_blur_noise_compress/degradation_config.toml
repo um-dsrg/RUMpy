@@ -1,0 +1,39 @@
+seed = 8
+scale = 4.0
+recursive = false
+output_extension = ".png"
+multiples = 1
+override_cli = true
+source_dir = "D:/Data/div2k/HR_div2k_reduced"
+output_dir = "D:/Data/div2k/lr_div2k_reduced_blur_noise_compress"
+pipeline = [ [ "realesrganblur", "b-config",], [ "downsample", "d-config",], [ "realesrgannoise", "n-config",], [ "randomcompress", "c-config",],]
+
+[deg_configs.b-config]
+device = 0
+pca_batch_len = 10000
+kernel_range = [ "iso", "aniso", "generalized_iso", "generalized_aniso", "plateau_aniso", "plateau_iso", "sinc",]
+pca_length = 100
+request_full_kernels = false
+request_pca_kernels = false
+request_kernel_metadata = true
+use_kernel_code = true
+sigma_x_range = [ 0.2, 3.0,]
+sigma_y_range = [ 0.2, 3.0,]
+normalize_metadata = true
+
+[deg_configs.d-config]
+scale = 4
+
+[deg_configs.n-config]
+gaussian_poisson_ratio = 0.5
+gaussian_noise_sigma_range = [ 1.0, 30.0,]
+poisson_noise_scale_range = [ 0.05, 3.0,]
+gray_noise_probability = 0.4
+device = "cuda"
+
+[deg_configs.c-config.jpeg_params]
+compression_range = [ 30, 95,]
+random_compression = true
+
+[deg_configs.c-config.jm_params]
+random_compression = true

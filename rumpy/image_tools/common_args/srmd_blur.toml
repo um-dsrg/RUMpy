@@ -1,0 +1,12 @@
+pipeline = [['srmdgaussianblur', 'b-config'], ['downsample', 'd-config']]
+
+[deg_configs]
+[deg_configs.d-config]
+scale = 4
+[deg_configs.b-config]
+request_pca_kernels = true
+request_full_kernels = false
+request_kernel_metadata = true
+random = true
+
+

@@ -1,0 +1,183 @@
+# all code here imported from https://github.com/xinntao/BasicSR/tree/4d34d071218d0e767096eddefa919200d5239936
+from torch import nn
+from torch.nn import functional as F
+from torch.nn.utils import spectral_norm
+
+class VGGStyleDiscriminator128(nn.Module):
+    """VGG style discriminator with input size 128 x 128.
+    It is used to train SRGAN and ESRGAN.
+    Args:
+        num_in_ch (int): Channel number of inputs. Default: 3.
+        num_feat (int): Channel number of base intermediate features.
+            Default: 64.
+    """
+
+    def __init__(self, num_in_ch=3, num_feat=64):
+        super(VGGStyleDiscriminator128, self).__init__()
+
+        self.conv0_0 = nn.Conv2d(num_in_ch, num_feat, 3, 1, 1, bias=True)
+        self.conv0_1 = nn.Conv2d(num_feat, num_feat, 4, 2, 1, bias=False)
+        self.bn0_1 = nn.BatchNorm2d(num_feat, affine=True)
+
+        self.conv1_0 = nn.Conv2d(num_feat, num_feat * 2, 3, 1, 1, bias=False)
+        self.bn1_0 = nn.BatchNorm2d(num_feat * 2, affine=True)
+        self.conv1_1 = nn.Conv2d(num_feat * 2, num_feat * 2, 4, 2, 1, bias=False)
+        self.bn1_1 = nn.BatchNorm2d(num_feat * 2, affine=True)
+
+        self.conv2_0 = nn.Conv2d(num_feat * 2, num_feat * 4, 3, 1, 1, bias=False)
+        self.bn2_0 = nn.BatchNorm2d(num_feat * 4, affine=True)
+        self.conv2_1 = nn.Conv2d(num_feat * 4, num_feat * 4, 4, 2, 1, bias=False)
+        self.bn2_1 = nn.BatchNorm2d(num_feat * 4, affine=True)
+
+        self.conv3_0 = nn.Conv2d(num_feat * 4, num_feat * 8, 3, 1, 1, bias=False)
+        self.bn3_0 = nn.BatchNorm2d(num_feat * 8, affine=True)
+        self.conv3_1 = nn.Conv2d(num_feat * 8, num_feat * 8, 4, 2, 1, bias=False)
+        self.bn3_1 = nn.BatchNorm2d(num_feat * 8, affine=True)
+
+        self.conv4_0 = nn.Conv2d(num_feat * 8, num_feat * 8, 3, 1, 1, bias=False)
+        self.bn4_0 = nn.BatchNorm2d(num_feat * 8, affine=True)
+        self.conv4_1 = nn.Conv2d(num_feat * 8, num_feat * 8, 4, 2, 1, bias=False)
+        self.bn4_1 = nn.BatchNorm2d(num_feat * 8, affine=True)
+
+        self.linear1 = nn.Linear(num_feat * 8 * 4 * 4, 100)
+        self.linear2 = nn.Linear(100, 1)
+
+        # activation function
+        self.lrelu = nn.LeakyReLU(negative_slope=0.2, inplace=True)
+
+    def forward(self, x):
+        assert x.size(2) == 128 and x.size(3) == 128, (f'Input spatial size must be 128x128, but received {x.size()}.')
+
+        feat = self.lrelu(self.conv0_0(x))
+        feat = self.lrelu(self.bn0_1(self.conv0_1(feat)))  # output spatial size: (64, 64)
+
+        feat = self.lrelu(self.bn1_0(self.conv1_0(feat)))
+        feat = self.lrelu(self.bn1_1(self.conv1_1(feat)))  # output spatial size: (32, 32)
+
+        feat = self.lrelu(self.bn2_0(self.conv2_0(feat)))
+        feat = self.lrelu(self.bn2_1(self.conv2_1(feat)))  # output spatial size: (16, 16)
+
+        feat = self.lrelu(self.bn3_0(self.conv3_0(feat)))
+        feat = self.lrelu(self.bn3_1(self.conv3_1(feat)))  # output spatial size: (8, 8)
+
+        feat = self.lrelu(self.bn4_0(self.conv4_0(feat)))
+        feat = self.lrelu(self.bn4_1(self.conv4_1(feat)))  # output spatial size: (4, 4)
+
+        feat = feat.view(feat.size(0), -1)
+        feat = self.lrelu(self.linear1(feat))
+        out = self.linear2(feat)
+        return out
+
+
+class Discriminator_UNet(nn.Module):
+    """Defines a U-Net discriminator with spectral normalization (SN)
+    https://github.com/cszn/KAIR/blob/master/models/network_discriminator.py
+    """
+
+    def __init__(self, input_nc=3, ndf=64):
+        super(Discriminator_UNet, self).__init__()
+        norm = spectral_norm
+
+        self.conv0 = nn.Conv2d(input_nc, ndf, kernel_size=3, stride=1, padding=1)
+
+        self.conv1 = norm(nn.Conv2d(ndf, ndf * 2, 4, 2, 1, bias=False))
+        self.conv2 = norm(nn.Conv2d(ndf * 2, ndf * 4, 4, 2, 1, bias=False))
+        self.conv3 = norm(nn.Conv2d(ndf * 4, ndf * 8, 4, 2, 1, bias=False))
+        # upsample
+        self.conv4 = norm(nn.Conv2d(ndf * 8, ndf * 4, 3, 1, 1, bias=False))
+        self.conv5 = norm(nn.Conv2d(ndf * 4, ndf * 2, 3, 1, 1, bias=False))
+        self.conv6 = norm(nn.Conv2d(ndf * 2, ndf, 3, 1, 1, bias=False))
+
+        # extra
+        self.conv7 = norm(nn.Conv2d(ndf, ndf, 3, 1, 1, bias=False))
+        self.conv8 = norm(nn.Conv2d(ndf, ndf, 3, 1, 1, bias=False))
+
+        self.conv9 = nn.Conv2d(ndf, 1, 3, 1, 1)
+
+    def forward(self, x):
+        x0 = F.leaky_relu(self.conv0(x), negative_slope=0.2, inplace=True)
+        x1 = F.leaky_relu(self.conv1(x0), negative_slope=0.2, inplace=True)
+        x2 = F.leaky_relu(self.conv2(x1), negative_slope=0.2, inplace=True)
+        x3 = F.leaky_relu(self.conv3(x2), negative_slope=0.2, inplace=True)
+
+        # upsample
+        x3 = F.interpolate(x3, scale_factor=2, mode='bilinear', align_corners=False)
+        x4 = F.leaky_relu(self.conv4(x3), negative_slope=0.2, inplace=True)
+
+        x4 = x4 + x2
+        x4 = F.interpolate(x4, scale_factor=2, mode='bilinear', align_corners=False)
+        x5 = F.leaky_relu(self.conv5(x4), negative_slope=0.2, inplace=True)
+
+        x5 = x5 + x1
+        x5 = F.interpolate(x5, scale_factor=2, mode='bilinear', align_corners=False)
+        x6 = F.leaky_relu(self.conv6(x5), negative_slope=0.2, inplace=True)
+
+        x6 = x6 + x0
+
+        # extra
+        out = F.leaky_relu(self.conv7(x6), negative_slope=0.2, inplace=True)
+        out = F.leaky_relu(self.conv8(out), negative_slope=0.2, inplace=True)
+        out = self.conv9(out)
+
+        return out
+
+class UNetDiscriminatorSN(nn.Module):
+    """Defines a U-Net discriminator with spectral normalization (SN)
+    It is used in Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data.
+    Arg:
+        num_in_ch (int): Channel number of inputs. Default: 3.
+        num_feat (int): Channel number of base intermediate features. Default: 64.
+        skip_connection (bool): Whether to use skip connections between U-Net. Default: True.
+
+    https://github.com/XPixelGroup/BasicSR/blob/479ec97e8a23e49cc559c081f8ff80eac1bc5989/basicsr/archs/discriminator_arch.py
+    """
+
+    def __init__(self, num_in_ch=3, num_feat=64, skip_connection=True):
+        super(UNetDiscriminatorSN, self).__init__()
+        self.skip_connection = skip_connection
+        norm = spectral_norm
+        # the first convolution
+        self.conv0 = nn.Conv2d(num_in_ch, num_feat, kernel_size=3, stride=1, padding=1)
+        # downsample
+        self.conv1 = norm(nn.Conv2d(num_feat, num_feat * 2, 4, 2, 1, bias=False))
+        self.conv2 = norm(nn.Conv2d(num_feat * 2, num_feat * 4, 4, 2, 1, bias=False))
+        self.conv3 = norm(nn.Conv2d(num_feat * 4, num_feat * 8, 4, 2, 1, bias=False))
+        # upsample
+        self.conv4 = norm(nn.Conv2d(num_feat * 8, num_feat * 4, 3, 1, 1, bias=False))
+        self.conv5 = norm(nn.Conv2d(num_feat * 4, num_feat * 2, 3, 1, 1, bias=False))
+        self.conv6 = norm(nn.Conv2d(num_feat * 2, num_feat, 3, 1, 1, bias=False))
+        # extra convolutions
+        self.conv7 = norm(nn.Conv2d(num_feat, num_feat, 3, 1, 1, bias=False))
+        self.conv8 = norm(nn.Conv2d(num_feat, num_feat, 3, 1, 1, bias=False))
+        self.conv9 = nn.Conv2d(num_feat, 1, 3, 1, 1)
+
+    def forward(self, x):
+        # downsample
+        x0 = F.leaky_relu(self.conv0(x), negative_slope=0.2, inplace=True)
+        x1 = F.leaky_relu(self.conv1(x0), negative_slope=0.2, inplace=True)
+        x2 = F.leaky_relu(self.conv2(x1), negative_slope=0.2, inplace=True)
+        x3 = F.leaky_relu(self.conv3(x2), negative_slope=0.2, inplace=True)
+
+        # upsample
+        x3 = F.interpolate(x3, scale_factor=2, mode='bilinear', align_corners=False)
+        x4 = F.leaky_relu(self.conv4(x3), negative_slope=0.2, inplace=True)
+
+        if self.skip_connection:
+            x4 = x4 + x2
+        x4 = F.interpolate(x4, scale_factor=2, mode='bilinear', align_corners=False)
+        x5 = F.leaky_relu(self.conv5(x4), negative_slope=0.2, inplace=True)
+
+        if self.skip_connection:
+            x5 = x5 + x1
+        x5 = F.interpolate(x5, scale_factor=2, mode='bilinear', align_corners=False)
+        x6 = F.leaky_relu(self.conv6(x5), negative_slope=0.2, inplace=True)
+
+        if self.skip_connection:
+            x6 = x6 + x0
+
+        # extra convolutions
+        out = F.leaky_relu(self.conv7(x6), negative_slope=0.2, inplace=True)
+        out = F.leaky_relu(self.conv8(out), negative_slope=0.2, inplace=True)
+        out = self.conv9(out)
+
+        return out

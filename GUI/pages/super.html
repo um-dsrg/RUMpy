@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">-->
+        <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">-->
+        <!-- Find out how to setup the above....-->
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/brands.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/regular.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/solid.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css">
+        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../node_modules/cropperjs/dist/cropper.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/video_player.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Deep-FIR GUI</title>
+    </head>
+    <body style="height: 3500px">
+        <header>
+            <nav>
+                <ul class="sidenav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions</a></li>
+                    <li><a href="super.html">Super-Resolution</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div>
+            <h1 class="heading">Frame Super-Resolution</h1>
+        </div>
+        <div id="contentLoad">
+            <div>
+                <h2 class="heading">Load Media</h2>
+            </div>
+            <div id="inputDiv">
+                <input type="file" id="content" accept="video/*,image/*">
+            </div>
+        </div>
+        <div id="metadataLoad">
+            <div>
+                <h2 class="heading">Load Metadata</h2>
+            </div>
+            <div id="inputDiv">
+                <input type="file" id="metadata" accept="text/plain,.csv">
+            </div>
+        </div>
+        <div id="videoplayer" class="videoplayer">
+            <div>
+                <h2 class="heading">Video Player</h2>
+            </div>
+            <div class="player">
+                <div>
+                    <video controls>
+                        <source id="source">
+                    </video>
+                </div>
+                <div class="controls">
+                    <button class="play" data-icon="&#xf04b;" aria-label="play pause toggle" title="Play/pause video"></button>
+                    <button class="stop" data-icon="&#xf04d;" aria-label="stop" title="Stop video"></button>
+                    <div class="timertext"><span aria-label="timer">00:00:00</span></div>
+                    <div class="timer"><div></div></div>
+                    <button class="frameBck" data-icon="&#xf048;" aria-label="frame back" title="Frame back"></button>
+                    <button class="rwd" data-icon="&#xf04a;" aria-label="rewind" title="Rewind"></button>
+                    <button class="fwd" data-icon="&#xf04e;" aria-label="fast forward" title="Fast forward"></button>
+                    <button class="frameFwd" data-icon="&#xf051;" aria-label="frame forward" title="Frame forward"></button>
+                    <button class="frameCut" data-icon="&#xf0c4;" aria-label="choose current frame" title="Choose frame"></button>
+                </div>
+            </div>
+        </div>
+        <div id="chosenFrame" class="player chosenFrame">
+            <div>
+                <h2 class="heading">Crop Chosen Frame</h2>
+            </div>
+            <div>
+                <div>
+                    <canvas id="chosenFrameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+                </div>
+                <div class="controls">
+                    <button class="crop" data-icon="&#xf125;" aria-label="crop chosen frame" title="Start crop"></button>
+                    <button class="cancelcrop" data-icon="&#xf0e2;" aria-label="cancel current crop" title="Cancel crop"></button>
+                    <button class="save" data-icon="&#xf0c7;" aria-label="save cropped frame" title="Save crop"></button>
+                </div>
+            </div>
+        </div>
+        <div id="croppedFrame" class="player croppedFrame">
+            <div>
+                <h2 class="heading">Cropped Frame</h2>
+            </div>
+            <div>
+                <div>
+                    <canvas id="croppedFrameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+                </div>
+                <div class="controls">
+                    <button class="superresolve2" data-icon="&#xf424;2" aria-label="super resolve frame by 2" title="Super-resolve by factor 2" disabled></button>
+                    <button class="superresolve3" data-icon="&#xf424;3" aria-label="super resolve frame by 3" title="Super-resolve by factor 3" disabled></button>
+                    <button class="superresolve4" data-icon="&#xf424;4" aria-label="super resolve frame by 4" title="Super-resolve by factor 4"></button>
+                </div>
+            </div>
+        </div>
+        <div id="superResolvedFrame" class="player">
+            <div>
+                <h2 class="heading">Super-Resolved Frame</h2>
+            </div>
+            <div>
+                <div>
+                    <canvas id="superResolvedFrameCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+                </div>
+                <div class="controls">
+                    <button id="showComp" class="compare" data-icon="&#xf0db;" aria-label="show image comparison" title="Show before and after"></button>
+                    <button id="downloadSR" class="downloadRight" data-icon="&#xf019;" aria-label="download super resolved image" title="Download super-resolved image"></button>
+                </div>
+            </div>
+        </div>
+        <div id="comparisonFrame" class="player">
+            <div>
+                <h2 class="heading">Before and After Comparison</h2>
+            </div>
+            <div>
+                <div>
+                    <canvas id="sliderCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+                    <canvas id="comparisonCanvasBefore">Your browser does not support the HTML5 canvas tag.</canvas>
+                    <canvas id="comparisonCanvasAfter">Your browser does not support the HTML5 canvas tag.</canvas>
+                </div>
+                <div class="controls">
+                    <button id="downloadComp" class="downloadFull" data-icon="&#xf019;" aria-label="download PDF of comparison" title="Download the image comparison as a PDF"></button>
+                </div>
+            </div>
+        </div>
+        <script> window.$ = window.jQuery = require('jquery'); </script>
+        <script src="../js/custom_player.js"></script>
+        <script src="../node_modules/cropperjs/dist/cropper.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/tiff.js/tiff.min.js"></script>
+        <script src="../node_modules/jspdf/dist/jspdf.umd.js"></script>
+    </body>
+</html>
+

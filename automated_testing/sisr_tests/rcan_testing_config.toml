@@ -1,0 +1,41 @@
+experiment = "test_rcan"
+experiment_save_loc = "/Users/matt/Desktop/RUMpy/automated_testing/sisr_tests"
+
+[data]
+batch_size = 8
+dataloader_threads = 8
+
+[model]
+name = "rcan"
+
+[training]
+gpu = "single"
+sp_gpu = 0
+seed = 8
+num_epochs = 1000
+metrics = [ "PSNR", "SSIM",]
+id_source = "standard"
+logging = "visual"
+
+[model.internal_params]
+scale = 4
+lr = 0.0001
+face_training = false
+blur_kernels = false
+scheduler = "cosine_annealing_warm_restarts"
+
+[data.training_sets.data_1]
+name = "div2k"
+lr = "/Users/matt/Desktop/RUMpy/automated_testing/sisr_tests/training_dataset/lr_div2k_reduced_blur_noise_compress"
+hr = "/Users/matt/Desktop/RUMpy/automated_testing/sisr_tests/training_dataset/HR_div2k_reduced"
+crop = 64
+random_augment = true
+
+[data.eval_sets.data_1]
+lr = "/Users/matt/Desktop/RUMpy/automated_testing/sisr_tests/eval_dataset/lr"
+hr = "/Users/matt/Desktop/RUMpy/automated_testing/sisr_tests/eval_dataset/hr"
+
+[model.internal_params.scheduler_params]
+t_mult = 1
+restart_period = 40000
+lr_min = 1e-7

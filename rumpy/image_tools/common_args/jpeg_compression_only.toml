@@ -1,0 +1,8 @@
+pipeline = [['downsample', 'd-config'], ['jpegcompress', 'c-config']]
+
+[deg_configs]
+[deg_configs.d-config]
+scale = 4
+[deg_configs.c-config]
+random_compression = true
+

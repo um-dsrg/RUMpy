@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src "self"; script-src "self"">-->
+        <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src "self"; script-src "self"">-->
+        <!-- Find out how to setup the above....-->
+        <base href="./">
+        <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+        <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/brands.css">
+        <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/regular.css">
+        <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/solid.css">
+        <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css">
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./node_modules/cropperjs/dist/cropper.css">
+        <link rel="stylesheet" href="./css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Deep-FIR GUI</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="sidenav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="./pages/instructions.html">Instructions</a></li>
+                    <li><a href="./pages/super.html">Super-Resolution</a></li>
+                    <li><a href="./pages/settings.html">Settings</a></li>
+                    <li><a href="./pages/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div>
+            <h1 class="heading">Deep-FIR</h1>
+        </div>
+        <div class="textDiv">
+            <p>
+            Several countries around the world use CCTV systems as forensic evidence to combat crime.
+            The cameras cover large fields of view, where low-resolution facial images are typically captured,
+            making the identification of the subject of interest very difficult.
+            Moreover, distortions caused by video compression, motion blur and poor lighting
+            conditions can reduce their effectiveness. Some commercial products have recently included super-resolution
+            techniques that fuse consecutive video frames to restore high quality images. Nevertheless, these methods are in most cases insufficient,
+            especially when dealing with dynamic non-rigid objects such as faces.
+            </p>
+
+            <p>
+            The Deep-FIR project aims to design and implement a face image restoration algorithm that is able restore
+            very low-resolution facial images captured by CCTV systems with unconstrained pose and orientation.
+            The user will be able to restore the whole head, including the hair region, which is important for person identification.
+            while minimizing the manual work of the operator.
+            </p>
+
+            <img src="https://www.um.edu.mt/projects/deep-fir/wp-content/uploads/2018/07/cropped-pedestrians-1209316_1920-1.jpg" width="444.44px" height="266.667px" alt="Deep-FIR" class="centre" style="padding: 10px">
+
+            <p>
+            Apart from improving the quality of the restored facial images, this project intends to reduce the complexity
+            and therefore the time needed to enhance an image or video frame. The developed algorithm will be tested on
+            real-world CCTV videos and compared against existing video forensic tools used by forensic experts in their labs.
+            Other than video forensics, the proposed technology can be adopted and used in other sectors. such as video analytics
+            and iris recognition.
+            </p>
+
+            <p>This project is financed by the Malta Council for Science &amp; Technology, for and on
+            behalf of the Foundation for Science and Technology, through the FUSION: R&amp;I Technology Development Programme.
+            </p>
+
+            <div class="imageDiv">
+                <img src="images/uom.png" alt="Univerisyt of Malta" height="85px" class="adjustableImages">
+                <img src="images/ascent.png" alt="Ascent" height="85px" class="adjustableImages">
+                <img src="images/mcst.png" alt="Malta Council for Science and Technology" height="85px" class="adjustableImages">
+                <img src="images/fusion.png" alt="FUSION: R and I Technology Development Programme" height="85px" class="adjustableImages">
+            </div>
+        </div>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    </body>
+</html>

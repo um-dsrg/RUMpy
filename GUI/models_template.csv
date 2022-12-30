@@ -1,0 +1,3 @@
+name,label,location,epoch,group
+model_1,"Model One","path/to/model/folder",best,"Type 1"
+model_2,"Model Two","path/to/model/folder",best,"Type 2"

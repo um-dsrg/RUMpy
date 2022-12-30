@@ -1,0 +1,21 @@
+#pipeline = ['blur', 'downscale', 'jpeg-compress']
+#pipeline = [['srmdgaussianblur', 'b-config'], ['downsample', 'd-config']]
+pipeline = [['realesrganblur', 'b-config'], ['downsample', 'd-config'], ['realesrgannoise', 'n-config'], ['jpegcompress', 'j-config']]
+
+[deg_configs]
+[deg_configs.b-config]
+device = 0  # GPU device (if available)
+pca_batch_len = 10000
+kernel_range = ['aniso']
+pca_length = 100
+request_full_kernels = true
+request_pca_kernels = false
+#load_pca_matrix = 'standard_10_component'  # use standard PCA encoding
+[deg_configs.d-config]
+scale = 4
+[deg_configs.j-config]
+random_compression = true
+[deg_configs.n-config]
+gaussian_poisson_ratio = 0.5
+gaussian_noise_sigma_range = [1, 30]
+poisson_noise_scale_range = [0.05, 3.0]

@@ -1,0 +1,7 @@
+[model]
+name = "weakcon"
+[model.internal_params]
+lr = 0.001
+crop_count = 4
+model_name = "default"
+data_type = "all"

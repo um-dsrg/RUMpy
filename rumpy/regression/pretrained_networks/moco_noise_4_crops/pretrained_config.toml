@@ -1,0 +1,6 @@
+[model]
+name = 'mococontrastive'  # model architecture name
+[model.internal_params] # parameters specific for each model
+lr = 1e-3 # learning rate
+crop_count = 4
+model_name='default'

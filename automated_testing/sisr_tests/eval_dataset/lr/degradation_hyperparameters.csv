@@ -1,0 +1,21 @@
+index_num,degradation,hyperparam,value
+0,realesrganblur,blur_type,real_esrgan
+0,realesrganblur,kernel_size,21
+0,realesrganblur,sigma_x_range,"[0.2, 3.0]"
+0,realesrganblur,sigma_y_range,"[0.2, 3.0]"
+0,realesrganblur,rotation_range,"(-3.141592653589793, 3.141592653589793)"
+0,realesrganblur,beta_p_range,"(0.5, 8)"
+0,realesrganblur,beta_g_range,"(0.5, 8)"
+0,realesrganblur,noise_range,
+0,realesrganblur,kernel_type_range,"['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_aniso', 'plateau_iso', 'sinc']"
+0,realesrganblur,kernel_probabilities,
+1,downsample,min_scale,2
+1,downsample,max_scale,8
+2,realesrgannoise,gaussian_poisson_ratio,0.5
+2,realesrgannoise,poisson_noise_scale_range,"[0.05, 3.0]"
+2,realesrgannoise,gaussian_noise_sigma_range,"[1.0, 30.0]"
+2,realesrgannoise,gray_noise_probability,0.4
+3,randomcompress,min_jpeg_quality,30
+3,randomcompress,max_jpeg_quality,95
+3,randomcompress,min_qpi,20
+3,randomcompress,max_qpi,40

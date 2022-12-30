@@ -1,0 +1,70 @@
+experiment = "supmoco_iso_standard"  # experiment name
+experiment_save_loc = '../../../Results/SISR'  # experiment save location
+
+[data]
+batch_size = 32  # data batch size
+dataloader_threads = 4  # parallel threads to use to speed up data processing
+drop_last_training_batch = true # drop last training batch (incompatible with DASR encoder system)
+task_type = 'classification'
+
+[data.online_pipeline]
+pipeline = [ [ "realesrganblur", "b-config",], [ "downsample", "d-config",]]
+
+[data.online_pipeline.d-config]
+scale=4
+restrict_metadata = true
+
+[data.online_pipeline.b-config]
+device = 0
+pca_batch_len = 10000
+kernel_range = [ "iso"]
+pca_length = 100
+request_full_kernels = false
+request_pca_kernels = false
+request_kernel_metadata = true
+use_kernel_code = true
+normalize_metadata = true
+sigma_x_range = [ 0.2, 3.0,]
+sigma_y_range = [ 0.2, 3.0,]
+
+[data.training_sets]
+[data.training_sets.data_1]
+name = 'div2k'
+hr = '../../../Data/div2k/HR'
+crop = 64
+request_crops = 4
+online_degradations = true
+
+[data.training_sets.data_2]
+name = 'flickr2k'
+hr = '../../../Data/flickr2k/HR'
+crop = 64
+request_crops = 4
+online_degradations = true
+
+[data.eval_sets]
+[data.eval_sets.data_1]
+lr = '../../../Data/div2k/lr_iso_blur_only'
+degradation_metadata = 'on_site'
+
+[model]
+name = 'supmoco'  # model architecture name
+[model.internal_params] # parameters specific for each model
+lr = 1e-3 # learning rate
+crop_count = 4
+model_name='default'
+labelling_strategy = 'triple_precision'
+data_type = ['blur']
+
+[training]
+gpu = 'single' # one of multi, single, off
+sp_gpu = 0 # inital gpu to use
+seed = 8  # random seed
+epoch_cutoff = 1500  # epochs requested
+metrics = ['PSNR', 'SSIM']  # metrics to calculate on validation set
+id_source = 'standard'  # location of ids to use for face recognition metrics
+logging = 'visual' # one of visual or text
+best_load_metric = 'train-loss'
+early_stopping_metric = 'train-loss'
+cleanup_metric = 'train-loss'
+run_eval = true  # turn on contrastive eval system

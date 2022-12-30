@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src "self"; script-src "self"">-->
+        <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src "self"; script-src "self"">-->
+        <!-- Find out how to setup the above....-->
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/brands.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/regular.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/solid.css">
+        <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css">
+        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../node_modules/cropperjs/dist/cropper.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Deep-FIR GUI</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="sidenav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="instructions.html">Instructions</a></li>
+                    <li><a href="super.html">Super-Resolution</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div>
+            <h1 class="heading">Instructions</h1>
+        </div>
+        <div class="textDiv">
+            <p>
+            This application should be quite intuitive to use but some instructions have been included for better clarity.
+            In addition to this, a video has also been recorded (<a id="videoAnchor" class="descItem">show step-by-step video</a>) so that the user can have a visual reference as well.
+            </p>
+
+            <iframe id="videoEmbed" style="display:none" width="600" height="338" src="https://www.youtube.com/embed/sptjtztnQnE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <p>
+            Running the Deep-FIR application:
+            </p>
+
+            <ol>
+                <li>Check the <b>models.csv</b> file so that it includes the information for the models you want to use.</l1>
+                <li>Go over the options in the <b>Settings</b> tab.</l1>
+                <li>Enter the URL for the Deep-FIR backend (or else leave unchanged), and click the <b>Test API Connection</b> to make sure that the correct address is being used.</l1>
+                <li>Select the model and the processor, and click the <b>Load Model</b> button to correctly set up the Deep-FIR backend.</li>
+                <li>Go to the <b>Super-Resolution</b> tab to start the image restoration process.</l1>
+                <li>Load an image or a video by clicking the <b>Choose file</b> button.</l1>
+                <li>If a video has been chosen, use the video player to go through the file and choose the desired frame by clicking <span class="fas fa-cut"></span>.
+                If an image has been chosen, this step will be skipped and you can move on to cropping.</l1>
+                <li>To crop the frame or image, select the <span class="fas fa-crop"></span> and drag the box around the desired area.
+                To cancel the crop press the undo <span class="fas fa-undo"></span> and to move to the next step click the save button <span class="fas fa-save"></span>.</l1>
+                <li>Choose the scaling factor by which you want to super-resolve (currently only <b>x4</b> is available, <b>x2</b> and <b>x3</b> are not yet supported) and click the respective button.</l1>
+                <li>Once the super-resolved image appears, you can choose to compare the before and after images by clicking <span class="fas fa-columns"></span> and
+                you can also download the upsampled image as a PNG by clicking download button <span class="fas fa-download"></span>.</l1>
+                <li>If the before and after comparison is chosen, three images will be presented. The first image is interactive and allows you to drag the red
+                line <span class="fas fa-grip-lines-vertical" style="color:red"></span> over the image to see how certain features have been improved. The other two just show the before and after at the same size.</li>
+                <li>At the end of the image comparison, there is another download <span class="fas fa-download"></span> button, which allows you to
+                save a PDF which compares the original image with the super-resolved one.</li>
+            </ol>
+        </div>
+        <script src="../js/instructions.js"></script>
+        <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    </body>
+</html>
+

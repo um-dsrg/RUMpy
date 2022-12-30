@@ -1,0 +1,16 @@
+pipeline = [['realesrganblur', 'b-config'], ['downsample', 'd-config']]
+
+[deg_configs]
+[deg_configs.b-config]
+device = 0  # GPU device (if available)
+selected_kernel = 'aniso'
+request_full_kernels = true
+request_kernel_metadata = true
+random_selection = false
+sigma_x = 2.5
+sigma_y = 3.2
+rotation = 0.5
+
+[deg_configs.d-config]
+scale = 4
+
