@@ -122,7 +122,7 @@ Models have been split up into folders according to their category.  The specifi
   - Resnet
   - Densenet
   - Efficientnet (requires PyTorch 0.11)
-- Manet (still requires further testing)
+- MANet (still requires further testing)
 - Contrastive Models
   - MoCo
   - SupMoCo

@@ -57,3 +57,6 @@ Code/VSR/
 # Temporarily ignore DECA files
 Code/rumpy/sr_tools/3d_faces/
 rumpy/sr_tools/3d_faces/
+
+# ignore all results folders
+Results/
