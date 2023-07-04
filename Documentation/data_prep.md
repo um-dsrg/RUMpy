@@ -40,7 +40,7 @@ Here the first blurring operation has the unique ID ```b-config```.  With the pi
 device = 0 # specific GPU to use for computation
 pca_batch_len = 10000  # number of kernels to generate to compute PCA encoder
 kernel_range = [ "iso", "aniso", "generalized_iso", "generalized_aniso", "plateau_aniso", "plateau_iso", "sinc",]  # possible kernel types to sample
-pca_length = 100  # PCA elements for each kernel
+pca_length = 10  # PCA elements for each kernel
 request_full_kernels = false  # the full kernels should not be output to the metadata file
 request_pca_kernels = false  # the PCA kernels are not required
 request_kernel_metadata = true  # the kernel metadata should be output to the metadata file
